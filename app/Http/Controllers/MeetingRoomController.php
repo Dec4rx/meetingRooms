@@ -21,23 +21,24 @@ class MeetingRoomController extends Controller
         // Fetch all meeting rooms with active reservations at the current date and time
         $meetingRooms = MeetingRoom::with(['reservations' => function ($query) use ($currentDateTime) {
             $query->where('start_time', '<=', $currentDateTime)
-                ->where('end_time', '>=', $currentDateTime);
+                  ->where('end_time', '>=', $currentDateTime);
         }])->get();
-
-        // Transform data to include occupancy status and reservation ID if occupied
+    
+        // Transform data to include occupancy status, reservation ID, and when the room is occupied until
         $meetingRooms = $meetingRooms->map(function ($meetingRoom) {
             $isOccupied = $meetingRoom->reservations->count() > 0;
-            $reservationId = $isOccupied ? $meetingRoom->reservations->first()->id : null; // Getting the ID of the active reservation
-
+            $activeReservation = $isOccupied ? $meetingRoom->reservations->first() : null;
+    
             return [
                 'id' => $meetingRoom->id,
                 'name' => $meetingRoom->name,
                 'capacity' => $meetingRoom->capacity,
                 'is_occupied' => $isOccupied,
-                'reservation_id' => $reservationId  // Include reservation ID if the room is occupied
+                'reservation_id' => $isOccupied ? $activeReservation->id : null,
+                'occupied_until' => $isOccupied ? $activeReservation->end_time : null  // Include when the room is free if occupied
             ];
         });
-
+    
         // Return the transformed list as a JSON response
         return response()->json($meetingRooms);
     }
