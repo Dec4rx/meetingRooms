@@ -33,7 +33,7 @@ class MeetingRoomTest extends TestCase
             'name' => 'Updated Name'
         ];
 
-        $response = $this->putJson("/api/meeting_rooms/{$meetingRoom->id}", $data);
+        $response = $this->patchJson("/api/meeting_rooms/{$meetingRoom->id}", $data);
 
         $response->assertStatus(200)
                  ->assertJson([
