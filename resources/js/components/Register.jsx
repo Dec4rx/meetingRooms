@@ -46,6 +46,7 @@ const Register = () => {
                     sessionStorage.setItem('token', response.data.token);
                     sessionStorage.setItem('user', response.data.user);
                     navigate("/");
+                    window.location.reload(true);
                 }
             })
             .catch(error => {

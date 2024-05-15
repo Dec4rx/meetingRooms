@@ -1,4 +1,4 @@
-import { Table, Container } from 'react-bootstrap';
+import { Table, Container, Card } from 'react-bootstrap';
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
@@ -12,7 +12,6 @@ const History = () => {
         axios.get(`http://localhost:80/meetingRooms/public/api/reservations/${user_id}/past`,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
@@ -24,6 +23,8 @@ const History = () => {
     return (
 
         <Container>
+            <Card.Title className="text-center my-2"><h1>Meeting Rooms History</h1></Card.Title>
+            <hr />
 
             <Table striped bordered hover responsive className="my-5">
                 <thead>

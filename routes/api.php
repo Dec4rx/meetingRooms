@@ -14,19 +14,18 @@ Route::get('/user', function (Request $request) {
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 
-Route::resource('meeting_rooms', MeetingRoomController::class);
+
 Route::get('/meeting_rooms_list', [MeetingRoomController::class, 'indexWithOccupancy']);
-
-Route::post('/reservations', [ReservationController::class, 'store']);
-
-
 
 
 
 
 //Routes Auth
 Route::middleware('auth:api')->group(function () {
+    Route::post('/reservations', [ReservationController::class, 'store']);
     Route::delete('meeting_rooms/{id}/delete', [MeetingRoomController::class, 'destroy']);
-    Route::patch('/reservations/{id}/release', [ReservationController::class, 'release']);
+    Route::put('/reservations/{id}/release', [ReservationController::class, 'release']);
     Route::get('/reservations/{user_id}/past', [ReservationController::class, 'showPastReservations']);
+    Route::put('meeting_rooms_update/{id}', [MeetingRoomController::class, 'update']);
+    Route::post('meeting_rooms_post', [MeetingRoomController::class, 'store']);
 });

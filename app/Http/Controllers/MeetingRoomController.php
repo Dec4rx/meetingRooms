@@ -115,17 +115,11 @@ class MeetingRoomController extends Controller
             return response()->json(['message' => 'Meeting room not found'], 404);
         }
 
-        $wasChanged = false;
-
-        //Check if the some value has changed
-        if ((array_key_exists('name', $validatedData) && $meetingRoom->name !== $validatedData['name']) ||
-            (array_key_exists('capacity', $validatedData) && $meetingRoom->capacity !== $validatedData['capacity'])
-        ) {
-            $wasChanged = $meetingRoom->update($validatedData);
-        }
-
+        $meetingRoom -> name = $validatedData['name'] ?? $meetingRoom -> name;
+        $meetingRoom -> capacity = $validatedData['capacity'] ?? $meetingRoom -> capacity;
+        $meetingRoom -> save();
+        
         return response()->json([
-            'updated' => $wasChanged,
             'name' => $meetingRoom->name,
             'capacity' => $meetingRoom->capacity
         ], 200);

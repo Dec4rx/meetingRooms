@@ -4,6 +4,9 @@ import Main from "./Main"
 import Register from "./Register";
 import Login from "./Login";
 import History from "./History";
+import CreateRoom from "./CreateRoom";
+import UpdateRoom from "./UpdateRoom";
+import Reserve from "./Reserve";
 
 export const App = () => {
     return (
@@ -16,6 +19,9 @@ export const App = () => {
                     <Route path="register" element={<Register />}/>
                     <Route path="login" element={<Login/>}/>
                     <Route path="history" element={<History/>} />
+                    <Route path="createRoom" element={<CreateRoom/>}/>
+                    <Route path="updateRoom/:id" element={<UpdateRoom/>}/>
+                    <Route path="reserve/:id" element={<Reserve/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
