@@ -44,4 +44,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // The user may have many reservations
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
