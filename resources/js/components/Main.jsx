@@ -1,11 +1,11 @@
 import { Table, Container } from 'react-bootstrap';
 
-function Main() {
+const Main = () => {
     return (
-        
+
         <Container>
-            
-            <Table striped bordered hover responsive className="my-5"> 
+
+            <Table striped bordered hover responsive className="my-5">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -23,7 +23,7 @@ function Main() {
                         <td>x</td>
                         <td>x</td>
                     </tr>
-                   
+
                 </tbody>
             </Table>
 
