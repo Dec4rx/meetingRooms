@@ -17,14 +17,14 @@ class MeetingRoomController extends Controller
     public function indexWithOccupancy()
     {
         $currentDateTime = Carbon::now();
-
+    
         // Fetch all meeting rooms with active reservations at the current date and time
         $meetingRooms = MeetingRoom::with(['reservations' => function ($query) use ($currentDateTime) {
             $query->where('start_time', '<=', $currentDateTime)
                   ->where('end_time', '>=', $currentDateTime);
         }])->get();
     
-        // Transform data to include occupancy status, reservation ID, and when the room is occupied until
+        // Transform data to include occupancy status, reservation ID, user ID, and when the room is occupied until
         $meetingRooms = $meetingRooms->map(function ($meetingRoom) {
             $isOccupied = $meetingRoom->reservations->count() > 0;
             $activeReservation = $isOccupied ? $meetingRoom->reservations->first() : null;
@@ -35,11 +35,11 @@ class MeetingRoomController extends Controller
                 'capacity' => $meetingRoom->capacity,
                 'is_occupied' => $isOccupied,
                 'reservation_id' => $isOccupied ? $activeReservation->id : null,
-                'occupied_until' => $isOccupied ? $activeReservation->end_time : null  // Include when the room is free if occupied
+                'user_id' => $isOccupied ? $activeReservation->user_id : null,  // Include the user ID if occupied
+                'occupied_until' => $isOccupied ? $activeReservation->end_time : null
             ];
         });
     
-        // Return the transformed list as a JSON response
         return response()->json($meetingRooms);
     }
 

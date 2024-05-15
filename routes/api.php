@@ -18,6 +18,15 @@ Route::resource('meeting_rooms', MeetingRoomController::class);
 Route::get('/meeting_rooms_list', [MeetingRoomController::class, 'indexWithOccupancy']);
 
 Route::post('/reservations', [ReservationController::class, 'store']);
-Route::patch('/reservations/{id}/release', [ReservationController::class, 'release']);
-Route::get('/reservations/{user_id}/past', [ReservationController::class, 'showPastReservations']);
 
+
+
+
+
+
+//Routes Auth
+Route::middleware('auth:api')->group(function () {
+    Route::delete('meeting_rooms/{id}/delete', [MeetingRoomController::class, 'destroy']);
+    Route::patch('/reservations/{id}/release', [ReservationController::class, 'release']);
+    Route::get('/reservations/{user_id}/past', [ReservationController::class, 'showPastReservations']);
+});

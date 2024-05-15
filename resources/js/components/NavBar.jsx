@@ -35,7 +35,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
                         }
 
                         {
-                            !token ?
+                            token ?
                                 <Nav.Link as={Link} to="history">History</Nav.Link>
                                 : <></>
                         }

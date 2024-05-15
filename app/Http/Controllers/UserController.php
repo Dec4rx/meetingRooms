@@ -47,7 +47,7 @@ class UserController extends Controller
         // Send the user data
         return response()->json([
             'token' => $token,
-            'user' => ["id" => $user->id, "name" => $user->name, "email" => $user->email]
+            'user' => $user->id
         ], 201);
     }
 
@@ -64,7 +64,7 @@ class UserController extends Controller
             $user = Auth::user();
             $responseArray = [];
             $responseArray['token'] = $user->createToken('LaravelAuth')->accessToken;
-            $responseArray['user'] = ["id" => $user->id, "name" => $user->name, "email" => $user->email];
+            $responseArray['user'] =  $user->id;
             return response()->json($responseArray, 200);
         } else {
             return response()->json(['message' => 'Please check your email and password'], 401);

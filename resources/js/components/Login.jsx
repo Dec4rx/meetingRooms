@@ -27,7 +27,6 @@ export const Login = () => {
 
     const handleOnLogin = async (e) => {
         e.preventDefault();  // This stops the form from submitting in the traditional way
-        console.log(formValue)
         setFormOk(true);
         await axios.post('http://localhost:80/meetingRooms/public/api/login',
             formValue,
